@@ -18,35 +18,42 @@ public class AI extends MIDlet
 	public void pauseApp(){
 	}
 }
+class MainCanvas extends Canvas
+{
+	int LeftFlag,RightFlag,UpFlag,DownFlag;
+	/*
+	变量的声明
+	语法：数据类型 变量名称（标识符）;
+	*/
+	Image heroImage[][]=new Image[4][3];
+	Image currentImg;
 
-
-public class MainCanvas extends Canvas
-{	
-	int x,y,Change;
-
-	Image downImg1,downImg2,leftImg1,leftImg2,upImg1,upImg2,rightImg1,rightImg2,currentImg;
+	int x=120,y=100;
 
 	public MainCanvas(){
 		try
 		{
-			downImg1=Image.createImage("/sayo00.png"); //DOWN
-			leftImg1=Image.createImage("/sayo02.png"); //LEFT
-			upImg1=Image.createImage("/sayo04.png"); //UP
-			rightImg1=Image.createImage("/sayo06.png"); //RIGHT
+			/*
+			0:Left
+			1:Right
+			2:Up
+			3:Down
+			*/
+			for (int i=0;i<heroImage.length ;i++)
+			{
+				for (int j=0;j<heroImage[i].length ;j++ )
+				{
+					heroImage[i][j]=Image.createImage("/sayo"+i+j+".png");
+				}
+			}
 
-			downImg2=Image.createImage("/sayo20.png"); //DOWN
-			leftImg2=Image.createImage("/sayo22.png"); //LEFT
-			upImg2=Image.createImage("/sayo24.png"); //UP
-			rightImg2=Image.createImage("/sayo26.png"); //RIGHT
+			currentImg=heroImage[3][1];
 
+			LeftFlag=0;
+			RightFlag=0;
+			UpFlag=0;
+			DownFlag=0;
 
-			x=110;
-			y=140;
-
-
-			currentImg=downImg1;
-			
-			Change=1;
 		}
 		catch (IOException e)
 		{
@@ -54,37 +61,99 @@ public class MainCanvas extends Canvas
 		}
 	}
 
-
 	public void paint(Graphics g){
-		g.setColor(0,255,0);
+		g.setColor(0,0,0);
 		g.fillRect(0,0,getWidth(),getHeight());
-		g.drawImage(currentImg,x,y,0);
+		g.drawImage(currentImg,x,y,0);//120：X坐标、100：Y坐标
 	}
 
+	public void keyPressed(int keyCode){
+		int action=getGameAction(keyCode);
 
-	public void keyPressed(int keyCode)
-	{
-			if(action==LEFT)
-			{
-				currentImg=leftimg1;
-				x=x-2;
-			}
-			else if(action==RIGHT)
-			{
-				currentImg=rightimg1;
-				x=x+2;
-			}
-			else if(action==UP)
-			{
-				currentImg=upimg1;
-				y=y-2;
-			}
-			else if(action==DOWN)
-			{
-				currentImg=downImg1;
-				y=y+2;
-			}
+		/*
+		action的值：UP、DOWN、LEFT、RIGHT
+		*/
 
-		repaint();
+		if(action==LEFT){
+			/*
+			实现转向代码
+			给变量重新赋值即可
+			*/
+			if(LeftFlag==0)
+			{
+				currentImg=heroImage[0][1];
+				LeftFlag++;
+			}
+			if(LeftFlag==2)
+			{
+				currentImg=heroImage[0][2];
+				LeftFlag=0;
+			}
+			x=x-1;
+			repaint();
+		}
+
+		if(action==RIGHT){
+			/*
+			实现转向代码
+			*/
+			/*
+			给变量重新赋值即可
+			*/
+			if(RightFlag==0)
+			{
+				currentImg=heroImage[1][1];
+				RightFlag++;
+			}
+			if(RightFlag==2)
+			{
+				currentImg=heroImage[1][2];
+				RightFlag=0;
+			}
+			x=x+1;
+			repaint();
+		}
+
+		if(action==UP){
+			/*
+			实现转向代码
+			*/
+			/*
+			给变量重新赋值即可
+			*/
+			if(UpFlag==0)
+			{
+				currentImg=heroImage[2][1];
+				UpFlag++;
+			}
+			if(UpFlag==2)
+			{
+				currentImg=heroImage[2][2];
+				UpFlag=0;
+			}
+			y=y-1;
+			repaint();
+		}
+
+		if(action==DOWN){
+			/*
+			实现转向代码
+			*/
+			/*
+			给变量重新赋值即可
+			*/
+			if(DownFlag==0)
+			{
+				currentImg=heroImage[3][1];
+				DownFlag++;
+			}
+			if(DownFlag==2)
+			{
+				currentImg=heroImage[3][2];
+				DownFlag=0;
+			}
+			y=y+1;
+			repaint();
+		}
 	}
 }
