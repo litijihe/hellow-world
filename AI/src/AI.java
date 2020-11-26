@@ -20,7 +20,7 @@ public class AI extends MIDlet
 }
 class MainCanvas extends Canvas
 {
-	int LeftFlag,RightFlag,UpFlag,DownFlag;
+	int Flag;
 	/*
 	变量的声明
 	语法：数据类型 变量名称（标识符）;
@@ -49,10 +49,7 @@ class MainCanvas extends Canvas
 
 			currentImg=heroImage[3][1];
 
-			LeftFlag=0;
-			RightFlag=0;
-			UpFlag=0;
-			DownFlag=0;
+			Flag=1;
 
 		}
 		catch (IOException e)
@@ -67,6 +64,20 @@ class MainCanvas extends Canvas
 		g.drawImage(currentImg,x,y,0);//120：X坐标、100：Y坐标
 	}
 
+	public void changePicAndMove(int derection){
+		if(Flag==1)
+			{
+				currentImg=heroImage[derection][1];
+				Flag++;
+			}
+		else if(Flag==2)
+		{
+			currentImg=heroImage[derection][2];
+			Flag=1;
+		}
+
+	}
+
 	public void keyPressed(int keyCode){
 		int action=getGameAction(keyCode);
 
@@ -75,85 +86,23 @@ class MainCanvas extends Canvas
 		*/
 
 		if(action==LEFT){
-			/*
-			实现转向代码
-			给变量重新赋值即可
-			*/
-			if(LeftFlag==0)
-			{
-				currentImg=heroImage[0][1];
-				LeftFlag++;
-			}
-			if(LeftFlag==2)
-			{
-				currentImg=heroImage[0][2];
-				LeftFlag=0;
-			}
+			changePicAndMove(0);
 			x=x-1;
-			repaint();
 		}
-
 		if(action==RIGHT){
-			/*
-			实现转向代码
-			*/
-			/*
-			给变量重新赋值即可
-			*/
-			if(RightFlag==0)
-			{
-				currentImg=heroImage[1][1];
-				RightFlag++;
-			}
-			if(RightFlag==2)
-			{
-				currentImg=heroImage[1][2];
-				RightFlag=0;
-			}
+			changePicAndMove(1);
 			x=x+1;
-			repaint();
 		}
 
 		if(action==UP){
-			/*
-			实现转向代码
-			*/
-			/*
-			给变量重新赋值即可
-			*/
-			if(UpFlag==0)
-			{
-				currentImg=heroImage[2][1];
-				UpFlag++;
-			}
-			if(UpFlag==2)
-			{
-				currentImg=heroImage[2][2];
-				UpFlag=0;
-			}
+			changePicAndMove(2);
 			y=y-1;
-			repaint();
 		}
 
 		if(action==DOWN){
-			/*
-			实现转向代码
-			*/
-			/*
-			给变量重新赋值即可
-			*/
-			if(DownFlag==0)
-			{
-				currentImg=heroImage[3][1];
-				DownFlag++;
-			}
-			if(DownFlag==2)
-			{
-				currentImg=heroImage[3][2];
-				DownFlag=0;
-			}
+			changePicAndMove(3);
 			y=y+1;
-			repaint();
 		}
+		repaint();
 	}
 }
